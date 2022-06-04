@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Product } from "../../types/Product";
+import type { GetProductsResponse, Product } from "../../types/Product";
+import BigNumber from "bignumber.js";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +13,7 @@ export default async function handler(
   }
 
   try {
-    const response = await axios.get<Product[]>(
+    const response = await axios.get<GetProductsResponse>(
       "http://alltheclouds.com.au/api/Products",
       {
         headers: {
@@ -21,11 +22,15 @@ export default async function handler(
       }
     );
 
-    const products = response.data.map((product) => {
+    const products = response.data.map<Product>((product) => {
       return {
         ...product,
+        // Add a placeholder image
+        image: "https://placekitten.com/g/1600/900",
         // Apply a 25% markup to prices
-        unitPrice: product.unitPrice * 1.25,
+        unitPrice: new BigNumber(product.unitPrice)
+          .multipliedBy(1.25)
+          .toNumber(),
       };
     });
 
