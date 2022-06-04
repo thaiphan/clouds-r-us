@@ -1,10 +1,7 @@
-import axios from "axios";
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { ProductCard } from "../components/ProductCard";
 import { useGetProductsQuery } from "../services/products";
-import type { Product } from "../types/Product";
 
 const Home: NextPage = () => {
   const { isUninitialized, isLoading, data } = useGetProductsQuery();
@@ -12,6 +9,9 @@ const Home: NextPage = () => {
   // TODO: Add a loading skeleton
   return (
     <main className="px-4 sm:px-6 lg:px-8">
+      <Head>
+        <title>Clouds R Us</title>
+      </Head>
       <div className="my-8">
         <h1 className="text-6xl font-black">Clouds R Us</h1>
       </div>
