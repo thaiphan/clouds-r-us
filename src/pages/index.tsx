@@ -23,6 +23,9 @@ const Home: NextPage = () => {
           different needs.
         </p>
       </div>
+      {isLoading || isUninitialized ? (
+        <div className="my-8">Loading...</div>
+      ) : null}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
         {data?.map((product) => (
           <ProductCard key={product.productId} {...product} />
